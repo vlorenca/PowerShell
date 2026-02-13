@@ -1,0 +1,437 @@
+{
+  "Tweaks": [
+    { "Name": "Clear Temp Files", "Category": "System", "Command": "Remove-Item $env:TEMP\\* -Recurse -Force -ErrorAction SilentlyContinue" },
+    { "Name": "Create Test Folder", "Category": "Misc", "Command": "New-Item -Path $env:USERPROFILE\\Desktop\\WinTweaksTest -ItemType Directory -Force | Out-Null" },
+{
+  "Name": "Change Wallpaper",
+  "Category": "Personalization",
+  "Command": "Add-Type -TypeDefinition 'using System.Runtime.InteropServices; public class Win32 { [DllImport(\"user32.dll\",SetLastError=true)] public static extern bool SystemParametersInfo(int uAction,int uParam,string lpvParam,int fuWinIni); }'; $wallpaper = \"$env:WINDIR\\Web\\Wallpaper\\Windows\\img0.jpg\"; [Win32]::SystemParametersInfo(20, 0, $wallpaper, 3)"
+},
+
+
+{ "Name": "Show Hidden Files", "Category": "System", "Command": "Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced' -Name Hidden -Value 1" },
+{
+  "Name": "Disable System Sounds",
+  "Category": "Performance",
+  "Command": "Set-ItemProperty -Path \"HKCU:\\Control Panel\\Sound\" -Name \"MuteWhenMinimized\" -Value 1",
+  "UndoCommand": "Set-ItemProperty -Path \"HKCU:\\Control Panel\\Sound\" -Name \"MuteWhenMinimized\" -Value 0"
+},     
+{
+  "Name": "Disable Windows Defender",
+  "Category": "Security",
+  "Command": "Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\" -Name \"DisableAntiSpyware\" -Value 1",
+  "UndoCommand": "Remove-ItemProperty -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\" -Name \"DisableAntiSpyware\""
+},
+{
+  "Name": "Install Notepad++",
+  "Category": "Software",
+  "Command": "Start-Process 'https://notepad-plus-plus.org/repository/7.x/7.9.5/npp.7.9.5.Installer.exe' -Wait",
+  "UndoCommand": "Start-Process 'https://notepad-plus-plus.org/repository/7.x/7.9.5/npp.7.9.5.Installer.exe' -ArgumentList '/S' -Wait"
+},
+{
+  "Name": "Install Chrome",
+  "Category": "Software",
+  "Command": "Start-Process 'https://dl.google.com/chrome/install/latest/chrome_installer.exe' -Wait",
+  "UndoCommand": "winget uninstall --id Google.Chrome --exact --silent"
+},
+{
+  "Name": "Install VSCode",
+  "Category": "Software",
+  "Command": "Start-Process 'https://update.code.visualstudio.com/latest/win32-x64-user/stable' -Wait",
+  "UndoCommand": "winget uninstall --id Microsoft.VisualStudioCode --exact --silent"
+},
+{
+  "Name": "Install Firefox",
+  "Category": "Software",
+  "Command": "winget install --id Mozilla.Firefox --exact --silent --accept-package-agreements --accept-source-agreements",
+  "UndoCommand": "winget uninstall --id Mozilla.Firefox --exact --silent"
+},
+{
+  "Name": "Install Windows Spy Blocker",
+  "Category": "Security",
+  "Command": "winget install --id CrazyMax.WindowsSpyBlocker --exact --silent --accept-package-agreements --accept-source-agreements",
+  "UndoCommand": "winget uninstall --id CrazyMax.WindowsSpyBlocker --exact --silent"
+},
+{
+  "Name": "Install Chocolatey",
+  "Category": "Software",
+  "Command": "winget install --id Chocolatey.ChocolateyGUI --exact --silent --accept-package-agreements --accept-source-agreements",
+  "UndoCommand": "winget uninstall --id Chocolatey.ChocolateyGUI --exact --silent"
+},
+{
+  "Name": "Install Gimp",
+  "Category": "Software",
+  "Command": "winget install --id GIMP.GIMP.3 --exact --silent --accept-package-agreements --accept-source-agreements",
+  "UndoCommand": "winget uninstall --id GIMP.GIMP.3 --exact --silent"
+},
+{
+  "Name": "Install Zen Browser",
+  "Category": "Software",
+  "Command": "winget install --id Zen-Team.Zen-Browser --exact --accept-package-agreements --accept-source-agreements",
+  "UndoCommand": "winget uninstall --id Zen-Team.Zen-Browser --exact --silent"
+},
+{
+  "Name": "Install Tor Browser",
+  "Category": "Software",
+  "Command": "winget install --id TorProject.TorBrowser --exact --silent --accept-package-agreements --accept-source-agreements",
+  "UndoCommand": "winget uninstall --id TorProject.TorBrowser --exact --silent"
+},
+{
+  "Name": "Install Discord",
+  "Category": "Software",
+  "Command": "winget install --id Discord.Discord --exact --accept-package-agreements --accept-source-agreements",
+  "UndoCommand": "winget uninstall --id Discord.Discord --exact --silent"
+},
+{
+  "Name": "Disable Search History in Windows Explorer",
+  "Category": "Privacy",
+  "Command": "Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" -Name \"DisabledSearchBoxSuggestions\" -Value 1",
+  "UndoCommand": "Remove-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" -Name \"DisabledSearchBoxSuggestions\""
+},
+{
+  "Name": "Disable Prefetch (Improves Boot Time)",
+  "Category": "Performance",
+  "Command": "Set-ItemProperty -Path \"HKLM:\\System\\CurrentControlSet\\Control\\Session Manager\\Memory Management\" -Name \"EnablePrefetcher\" -Value 0",
+  "UndoCommand": "Set-ItemProperty -Path \"HKLM:\\System\\CurrentControlSet\\Control\\Session Manager\\Memory Management\" -Name \"EnablePrefetcher\" -Value 3"
+},
+{
+  "Name": "Disable Bing Search",
+  "Category": "Personalization",
+  "Command": "if (Test-Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search') { Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search' -Name 'BingSearchEnabled' -Value 0 }",
+  "UndoCommand": "if (Test-Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search') { Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search' -Name 'BingSearchEnabled' -Value 1 }"
+},
+{
+  "Name": "Increase Taskbar Transparency",
+  "Category": "Personalization",
+  "Command": "if (Test-Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize') { Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'EnableTransparency' -Value 1 }",
+  "UndoCommand": "if (Test-Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize') { Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'EnableTransparency' -Value 0 }"
+},
+
+    {
+  "Name": "Enable Dark Mode",
+  "Category": "UI Customization",
+  "Command": "Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\" -Name \"AppsUseLightTheme\" -Value 0; Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\" -Name \"SystemUsesLightTheme\" -Value 0",
+  "UndoCommand": "Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\" -Name \"AppsUseLightTheme\" -Value 1; Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\" -Name \"SystemUsesLightTheme\" -Value 1"
+}, 
+{
+  "Name": "Disable Windows Tips",
+  "Category": "Personalization",
+  "Command": "if (Test-Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager') { Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager' -Name 'SubscribedContent-338388Enabled' -Value 0 }",
+  "UndoCommand": "if (Test-Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager') { Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager' -Name 'SubscribedContent-338388Enabled' -Value 1 }"
+},
+
+{
+  "Name": "Disable Windows 10/11 Telemetry",
+  "Category": "Privacy",
+  "Command": "Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection\" -Name \"AllowTelemetry\" -Value 0",
+  "UndoCommand": "Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection\" -Name \"AllowTelemetry\" -Value 1"
+},
+{
+  "Name": "Disable Background Apps",
+  "Category": "Performance",
+  "Command": "if (-not (Test-Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications')) { New-Item -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications' -Force | Out-Null }; Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications' -Name GlobalUserDisabled -Type DWord -Value 1",
+  "UndoCommand": "if (Test-Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications') { Remove-Item -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications' -Recurse -Force }"
+},
+   
+ {
+    "Name": "Hide OneDrive Icon",
+    "Category": "Personalization",
+    "Command": "if (Test-Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}') { Remove-Item -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}' -Recurse -Force -ErrorAction SilentlyContinue }",
+    "UndoCommand": "if (-not (Test-Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}')) { New-Item -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}' -Force | Out-Null }"
+  },
+  {
+    "Name": "Show File Extensions",
+    "Category": "Explorer",
+    "Command": "Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced' -Name HideFileExt -Value 0",
+    "UndoCommand": "Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced' -Name HideFileExt -Value 1"
+  },
+  {
+    "Name": "Disable Copilot",
+    "Category": "Windows 11",
+    "Command": "if (-not (Test-Path 'HKCU:\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot')) { New-Item -Path 'HKCU:\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot' -Force | Out-Null }; Set-ItemProperty -Path 'HKCU:\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot' -Name TurnOffWindowsCopilot -Type DWord -Value 1",
+    "UndoCommand": "if (Test-Path 'HKCU:\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot') { Remove-Item -Path 'HKCU:\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot' -Recurse -Force }"
+  },
+  {
+    "Name": "Disable Widgets",
+    "Category": "Windows 11",
+    "Command": "if (-not (Test-Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Dsh')) { New-Item -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Dsh' -Force | Out-Null }; Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Dsh' -Name AllowNewsAndInterests -Type DWord -Value 0",
+    "UndoCommand": "if (Test-Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Dsh') { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Dsh' -Name AllowNewsAndInterests -Type DWord -Value 1 }"
+  },
+  {
+    "Name": "Disable Remote Assistance",
+    "Category": "Security",
+    "Command": "Set-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Remote Assistance' -Name fAllowToGetHelp -Value 0",
+    "UndoCommand": "Set-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Remote Assistance' -Name fAllowToGetHelp -Value 1"
+  },
+{
+    "Name": "Disable Hibernation",
+    "Category": "Advanced",
+    "Command": "powercfg -h off",
+    "UndoCommand": "powercfg -h on"
+  },
+  {
+    "Name": "Disable CPU Parking",
+    "Category": "CPU",
+    "Command": "powercfg -setacvalueindex SCHEME_CURRENT SUB_PROCESSOR CPMINCORES 100; powercfg -setactive SCHEME_CURRENT",
+    "UndoCommand": "powercfg -setacvalueindex SCHEME_CURRENT SUB_PROCESSOR CPMINCORES 0; powercfg -setactive SCHEME_CURRENT"
+  },
+  {
+    "Name": "Prefer Maximum GPU Performance",
+    "Category": "Graphics",
+    "Command": "Set-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers' -Name PowerPolicy -Type DWord -Value 1",
+    "UndoCommand": "Set-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers' -Name PowerPolicy -Type DWord -Value 0"
+  },
+{
+  "Name": "Install Proton VPN",
+  "Category": "Privacy",
+  "Command": "winget install --id=Proton.ProtonVPN -e --silent --accept-source-agreements --accept-package-agreements",
+  "UndoCommand": "winget uninstall --id=Proton.ProtonVPN -e --silent"
+},
+{
+  "Name": "Install Bitwarden",
+  "Category": "Privacy",
+  "Command": "winget install --id=Bitwarden.Bitwarden -e --silent --accept-source-agreements --accept-package-agreements",
+  "UndoCommand": "winget uninstall --id=Bitwarden.Bitwarden -e --silent"
+},
+
+{
+  "Name": "Install VLC (If Missing)",
+  "Category": "Media",
+  "Command": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('install','--id','VideoLAN.VLC','--silent','--accept-package-agreements','--accept-source-agreements') -Wait -NoNewWindow",
+  "UndoCommand": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('uninstall','--id','VideoLAN.VLC','--silent') -Wait -NoNewWindow"
+},
+  {
+    "Name": "Create Timestamped Restore Point",
+    "Category": "System",
+    "Command": "powershell -Command \"$desc = 'WinTweaks Restore Point - ' + (Get-Date -Format 'yyyy-MM-dd_HH-mm'); Checkpoint-Computer -Description $desc -RestorePointType 'MODIFY_SETTINGS'\"",
+    "UndoCommand": "powershell -Command \"Checkpoint-Computer -Description 'Undo WinTweaks Restore Point' -RestorePointType 'MODIFY_SETTINGS'\""
+  },
+  {
+    "Name": "Disable Lock Screen Background",
+    "Category": "Personalization",
+    "Command": "if (Test-Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization') { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization' -Name NoLockScreen -Value 1 } else { New-Item -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization' -Force | Out-Null; Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization' -Name NoLockScreen -Value 1 }",
+    "UndoCommand": "if (Test-Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization') { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization' -Name NoLockScreen -Value 0 }"
+  },
+  {
+    "Name": "Disable Startup Delay",
+    "Category": "Performance",
+    "Command": "if (Test-Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize') { Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize' -Name StartupDelayInMSec -Value 0 } else { New-Item -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize' -Force | Out-Null; Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize' -Name StartupDelayInMSec -Value 0 }",
+    "UndoCommand": "if (Test-Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize') { Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize' -Name StartupDelayInMSec -Value 2000 }"
+  },
+  {
+    "Name": "Optimize System Responsiveness",
+    "Category": "Gaming",
+    "Command": "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile' -Name SystemResponsiveness -Value 0",
+    "UndoCommand": "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile' -Name SystemResponsiveness -Value 20"
+  },
+{
+  "Name": "Disable Windows Update Auto-Restart",
+  "Category": "Performance",
+  "Command": "Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU\" -Name \"NoAutoRebootWithLoggedOnUsers\" -Value 1",
+  "UndoCommand": "Remove-ItemProperty -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU\" -Name \"NoAutoRebootWithLoggedOnUsers\""
+},
+{
+  "Name": "Auto End Tasks on Shutdown",
+  "Category": "Performance",
+  "Command": "Set-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name AutoEndTasks -Value 1"
+},
+{
+  "Name": "Enable GPU Hardware Scheduling",
+  "Category": "Gaming",
+  "Command": "Set-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers' -Name HwSchMode -Value 2"
+},
+{
+  "Name": "Disable Fullscreen Optimizations (Improve Game Performance)",
+  "Category": "Gaming",
+  "Command": "Set-ItemProperty -Path \"HKCU:\\System\\GameConfigStore\" -Name \"GameDVR_FSEBehaviorMode\" -Value 2",
+  "UndoCommand": "Set-ItemProperty -Path \"HKCU:\\System\\GameConfigStore\" -Name \"GameDVR_FSEBehaviorMode\" -Value 1"
+},
+  {
+    "Name": "Disable Memory Compression",
+    "Category": "Performance",
+    "Command": "Disable-MMAgent -MemoryCompression",
+    "UndoCommand": "Enable-MMAgent -MemoryCompression"
+  },
+  {
+    "Name": "Disable Activity History",
+    "Category": "Privacy",
+    "Command": "if (Test-Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System') { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System' -Name EnableActivityFeed -Value 0 } else { New-Item -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System' -Force | Out-Null; Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System' -Name EnableActivityFeed -Value 0 }",
+    "UndoCommand": "if (Test-Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System') { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System' -Name EnableActivityFeed -Value 1 }"
+  },
+  {
+    "Name": "Block DiagTrack Outbound",
+    "Category": "Firewall",
+    "Command": "New-NetFirewallRule -DisplayName 'Block DiagTrack Outbound' -Direction Outbound -Service DiagTrack -Action Block -Profile Any -ErrorAction SilentlyContinue",
+    "UndoCommand": "Remove-NetFirewallRule -DisplayName 'Block DiagTrack Outbound' -ErrorAction SilentlyContinue"
+  },
+  {
+    "Name": "Block CEIP Outbound",
+    "Category": "Firewall",
+    "Command": "New-NetFirewallRule -DisplayName 'Block CEIP Outbound' -Program '%SystemRoot%\\System32\\CompatTelRunner.exe' -Direction Outbound -Action Block -Profile Any -ErrorAction SilentlyContinue",
+    "UndoCommand": "Remove-NetFirewallRule -DisplayName 'Block CEIP Outbound' -ErrorAction SilentlyContinue"
+  },
+  {
+    "Name": "Block Feedback Hub Network Access",
+    "Category": "Firewall",
+    "Command": "New-NetFirewallRule -DisplayName 'Block Feedback Hub' -Program 'C:\\Program Files\\WindowsApps\\Microsoft.WindowsFeedbackHub*' -Direction Outbound -Action Block -Profile Any -ErrorAction SilentlyContinue",
+    "UndoCommand": "Remove-NetFirewallRule -DisplayName 'Block Feedback Hub' -ErrorAction SilentlyContinue"
+  },
+  {
+    "Name": "Disable Geolocation Service",
+    "Category": "Privacy",
+    "Command": "Stop-Service lfsvc -ErrorAction SilentlyContinue; Set-Service lfsvc -StartupType Disabled",
+    "UndoCommand": "Set-Service lfsvc -StartupType Manual; Start-Service lfsvc"
+  },
+{
+  "Name": "Install LibreOffice",
+  "Category": "Software",
+  "Command": "winget install --id TheDocumentFoundation.LibreOffice -e --silent",
+  "UndoCommand": "winget uninstall --id TheDocumentFoundation.LibreOffice -e --silent"
+},
+{
+  "Name": "Install Everything Search",
+  "Category": "Software",
+  "Command": "winget install --id Voidtools.Everything -e --silent",
+  "UndoCommand": "winget uninstall --id Voidtools.Everything -e --silent"
+},
+{
+  "Name": "Install PowerToys",
+  "Category": "Software",
+  "Command": "winget install --id Microsoft.PowerToys -e --silent",
+  "UndoCommand": "winget uninstall --id Microsoft.PowerToys -e --silent"
+},
+{
+  "Name": "Install PuTTY",
+  "Category": "Software",
+  "Command": "winget install --id PuTTY.PuTTY -e --silent",
+  "UndoCommand": "winget uninstall --id PuTTY.PuTTY -e --silent"
+},
+{
+  "Name": "Install Docker Desktop",
+  "Category": "Software",
+  "Command": "winget install --id Docker.DockerDesktop -e --silent",
+  "UndoCommand": "winget uninstall --id Docker.DockerDesktop -e --silent"
+},
+{
+  "Name": "Install Vagrant (VM Automation)",
+  "Category": "Software",
+  "Command": "winget install --id HashiCorp.Vagrant -e --silent",
+  "UndoCommand": "winget uninstall --id HashiCorp.Vagrant -e --silent"
+},
+{
+  "Name": "Install VirtualBox",
+  "Category": "Software",
+  "Command": "winget install --id Oracle.VirtualBox -e --silent",
+  "UndoCommand": "winget uninstall --id Oracle.VirtualBox -e --silent"
+},
+{
+  "Name": "Install Wireshark (Network Analysis)",
+  "Category": "Software",
+  "Command": "winget install --id WiresharkFoundation.Wireshark -e --silent",
+  "UndoCommand": "winget uninstall --id WiresharkFoundation.Wireshark -e --silent"
+},
+{
+  "Name": "Install NirSoft Utilities (Password / Network / System Tools)",
+  "Category": "Software",
+  "Command": "winget install --id NirSoft.NirSoft -e --silent",
+  "UndoCommand": "winget uninstall --id NirSoft.NirSoft -e --silent"
+},
+{
+  "Name": "Install Kali Linux WSL",
+  "Category": "Red-Team Lab",
+  "Command": "wsl --install -d Kali-Linux",
+  "UndoCommand": "wsl --uninstall -d Kali-Linux"
+},
+{
+  "Name": "Install Foxit PDF Reader",
+  "Category": "Software",
+  "Command": "winget install --id Foxit.FoxitPDFReader -e --silent",
+  "UndoCommand": "winget uninstall --id Foxit.FoxitPDFReader -e --silent"
+},
+{
+  "Name": "Install Foxit PDF Editor",
+  "Category": "Software",
+  "Command": "winget install --id Foxit.FoxitPDFEditor -e --silent",
+  "UndoCommand": "winget uninstall --id Foxit.FoxitPDFEditor -e --silent"
+},
+
+{
+  "Name": "Install Eraser (File Shredder)",
+  "Category": "Security",
+  "Command": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('install','--id','PowTools.FileShredder','-e','--silent') -Wait -NoNewWindow",
+  "UndoCommand": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('uninstall','--id','PowTools.FileShredder','-e','--silent') -Wait -NoNewWindow"
+},
+
+{
+  "Name": "Install MacPaw Encrypto",
+  "Category": "Privacy",
+  "Command": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('install','--id','MacPaw.Encrypto','-e','--silent') -Wait -NoNewWindow",
+  "UndoCommand": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('uninstall','--id','MacPaw.Encrypto','-e','--silent') -wait -NoNewWindow"
+},
+{
+  "Name": "Install AdGuard for Windows",
+  "Category": "Software",
+  "Command": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('install','--id','AdGuard.AdGuard','-e','--silent') -Wait -NoNewWindow",
+  "UndoCommand": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('uninstall','--id','AdGuard.AdGuard','-e','--silent') -Wait -NoNewWindow"
+},
+{
+  "Name": "Install AdGuard for Windows",
+  "Category": "Software",
+  "Command": "winget install --id AdGuard.AdGuard -e --silent",
+  "UndoCommand": "winget uninstall --id AdGuard.AdGuard -e --silent"
+},
+
+{
+  "Name": "Install O&O ShutUp10++",
+  "Category": "Privacy",
+  "Command": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('install','--id','OO-Software.ShutUp10','-e','--silent') -Wait -NoNewWindow",
+  "UndoCommand": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('uninstall','--id','OO-Software.ShutUp10','-e','--silent') -Wait -NoNewWindow"
+},
+{
+  "Name": "Enable GOD Mode",
+  "Category": "System",
+  "Command": "if (-not (Test-Path \"$env:USERPROFILE\\Desktop\\GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}\")) { New-Item -Path \"$env:USERPROFILE\\Desktop\\GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}\" -ItemType Directory | Out-Null }",
+  "UndoCommand": "if (Test-Path \"$env:USERPROFILE\\Desktop\\GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}\") { Remove-Item -Path \"$env:USERPROFILE\\Desktop\\GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}\" -Recurse -Force }"
+},
+
+{
+  "Name": "Install Equalizer APO",
+  "Category": "Media",
+  "Command": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('install','--id','EqualizerAPO.EqualizerAPO','-e','--silent') -Wait -NoNewWindow",
+  "UndoCommand": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('uninstall','--id','EqualizerAPO.EqualizerAPO','-e','--silent') -Wait -NoNewWindow"
+},
+{
+  "Name": "Disable OneDrive",
+  "Category": "Privacy",
+  "Command": "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\OneDrive' -Name 'DisableFileSyncNGSC' -Value 1 -Type DWord -Force",
+  "UndoCommand": "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\OneDrive' -Name 'DisableFileSyncNGSC' -Value 0 -Type DWord -Force"
+},
+
+{
+  "Name": "Enable Transparent Lock Screen",
+  "Category": "Personalization",
+  "Command": "Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'EnableTransparency' -Value 1",
+  "UndoCommand": "Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize' -Name 'EnableTransparency' -Value 0" 
+},
+{
+    "Name": "Disable Cortana",
+    "Category": "Privacy",
+    "Command": "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search' -Name 'AllowCortana' -Value 0 -Type DWord -Force",
+    "UndoCommand": "Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search' -Name 'AllowCortana' -Value 1 -Type DWord -Force"
+  },
+{
+    "Name": "Install 7-Zip",
+    "Category": "Software",
+    "Command": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('install','--id=7zip.7zip','--exact','--silent','--accept-package-agreements','--accept-source-agreements') -Wait -NoNewWindow",
+    "UndoCommand": "Start-Process \"$env:LOCALAPPDATA\\Microsoft\\WindowsApps\\winget.exe\" -ArgumentList @('uninstall','--id=7zip.7zip','--silent') -Wait -NoNewWindow"
+},
+{
+  "Name": "Enable Fast Startup",
+  "Category": "Performance",
+  "Command": "Set-ItemProperty -Path \"HKLM:\\System\\CurrentControlSet\\Control\\Session Manager\\Power\" -Name \"HiberbootEnabled\" -Value 1",
+  "UndoCommand": "Set-ItemProperty -Path \"HKLM:\\System\\CurrentControlSet\\Control\\Session Manager\\Power\" -Name \"HiberbootEnabled\" -Value 0"
+}
+
+  ]
+}
+
