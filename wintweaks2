@@ -1,0 +1,32 @@
+# ---------------------------
+# WinTweaks bootstrap
+# ---------------------------
+# Load WPF assemblies
+Add-Type -AssemblyName PresentationFramework
+Add-Type -AssemblyName System.Windows.Forms
+
+
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+Clear-Host
+
+$BaseUrl = "https://lorencats.com"
+
+# --- Load Functions ---
+$FunctionsText = [System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest "$BaseUrl/core/functions4.ps1" -UseBasicParsing).Content)
+Invoke-Expression $FunctionsText
+
+# --- Load XAML ---
+$XamlText = [System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest "$BaseUrl/ui/main2.xaml" -UseBasicParsing).Content)
+$XamlXml = New-Object System.Xml.XmlDocument
+$XamlXml.LoadXml($XamlText)
+$XamlReader = New-Object System.Xml.XmlNodeReader $XamlXml
+$Window = [Windows.Markup.XamlReader]::Load($XamlReader)
+
+# --- Load tweaks ---
+$TweaksData = (Invoke-WebRequest "$BaseUrl/config/tweaks.json" -UseBasicParsing).Content | ConvertFrom-Json
+
+
+
+# --- Initialize ---
+Initialize-WinTweaks -Xaml $Window -TweaksData $TweaksData
+
