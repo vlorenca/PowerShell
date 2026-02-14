@@ -233,12 +233,14 @@
 {
   "Name": "Auto End Tasks on Shutdown",
   "Category": "Performance",
-  "Command": "Set-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name AutoEndTasks -Value 1"
+  "Command": "Set-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name AutoEndTasks -Value 1",
+  "UndoCommand": "Set-ItemProperty -Path 'HKCU:\\Control Panel\\Desktop' -Name AutoEndTasks -Value 0"
 },
 {
   "Name": "Enable GPU Hardware Scheduling",
   "Category": "Gaming",
-  "Command": "Set-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers' -Name HwSchMode -Value 2"
+  "Command": "Set-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers' -Name HwSchMode -Value 2",
+  "UndoCommand": "Set-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers' -Name HwSchMode -Value 1"
 },
 {
   "Name": "Disable Fullscreen Optimizations (Improve Game Performance)",
